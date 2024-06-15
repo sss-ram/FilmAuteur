@@ -1,0 +1,13 @@
+@startuml
+title Amazon Web Scraper
+
+Actor User
+
+User -> (Search Product)
+User -> (Scrape Product Information)
+User -> (Save Scraped Data)
+
+(Search Product) <--> (Scrape Product Information)
+(Scrape Product Information) --> (Save Scraped Data)
+
+@enduml

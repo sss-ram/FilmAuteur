@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <title>Price Monitoring And Comparison</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Price Monitoring And Comparison</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="docs.html">Documentation</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2>Overview</h2>
+    <p>This project is a web scraper that allows you to extract data from Amazon's website.</p>
+    <form id="form">
+      <label for="file">Select CSV file:</label>
+      <input type="file" id="file" name="file" accept=".csv">
+    </form>
+    <table id="csv-table"></table>
+    <form id="form">
+      <label for="url">Product URL:</label>
+      <input type="text" id="url" name="url">
+      <input type="submit" value="Scrape" onclick="displayCSV()">
+    </form>
+  </main>
+  <footer>
+    <p>Copyright © 2022 Price Monitoring And Comparison</p>
+  </footer>
+  
+  <script>
+    const fileInput = document.querySelector('input[type="file"]');
+    fileInput.addEventListener('change', handleFileUpload);
+    
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      Papa.parse(file, {
+        header: true,
+        dynamicTyping: true,
+        complete: function(results) {
+          const data = results.data;
+          const table = document.querySelector('#csv-table');
+          let tableHTML = '';
+          for (let i = 0; i < data.length; i++) {
+            tableHTML += '<tr>';
+            for (const key in data[i]) {
+              tableHTML += `<td>${data[i][key]}</td>`;
+            }
+            tableHTML += '</tr>';
+          }
+          table.innerHTML = tableHTML;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
